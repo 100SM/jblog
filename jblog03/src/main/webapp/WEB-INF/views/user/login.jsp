@@ -17,10 +17,12 @@
 	<div class="center-content">
 		<h1 class="logo">JBlog</h1>
 		<c:import url="/WEB-INF/views/user/includes/menu.jsp" />
-		<form class="login-form">
-			<label>아이디</label> <input type="text" name="id"> <label>패스워드</label>
-			<input type="text" name="password"> <input type="submit"
-				value="로그인">
+		<form class="login-form" name="loginform" method="post" action="${pageContext.request.contextPath}/user/auth">
+			<label>아이디</label>
+			<input type="text" name="id">
+			<label>패스워드</label>
+			<input type="text" name="password">
+			<input type="submit" value="로그인">
 		</form>
 	</div>
 </body>

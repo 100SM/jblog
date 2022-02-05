@@ -15,10 +15,6 @@ public class PostRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<PostVo> findByCategoryNo(Long CategoryNo) {
-		return sqlSession.selectList("post.findByCategoryNo");
-	}
-
 	public int insert(PostVo PostVo) {
 		return sqlSession.insert("post.insert", PostVo);
 	}
@@ -34,10 +30,18 @@ public class PostRepository {
 		return sqlSession.delete("post.delete", map);
 	}
 
+	public List<PostVo> findByCategoryNo(Long CategoryNo) {
+		return sqlSession.selectList("post.findByCategoryNo");
+	}
+
 	public PostVo findByNoAndCategoryNo(Long no, Long CategoryNo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("CategoryNo", CategoryNo);
 		return sqlSession.selectOne("post.findByNoAndCategoryNo", map);
+	}
+
+	public PostVo findRecentPost(Long CategoryNo) {
+		return sqlSession.selectOne("post.findRecentPost");
 	}
 }

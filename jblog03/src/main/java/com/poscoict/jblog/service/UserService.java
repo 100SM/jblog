@@ -20,15 +20,12 @@ public class UserService {
 //	@Autowired
 //	private CategoryVo categoryVo;
 
-	public boolean join(UserVo userVo) {
+	public void join(UserVo userVo) {
 		userRepository.insert(userVo);
-		System.out.println("UserService 25 line : userVo : " + userVo);
 		blogRepository.add(userVo.getId());
-		System.out.println("UserService 27 line : userVo.getId() : " + userVo.getId());
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setBlogId(userVo.getId());
 		categoryRepository.add(categoryVo);
-		return userRepository.insert(userVo) == 1;
 	}
 
 	public UserVo getUser(String id, String password) {

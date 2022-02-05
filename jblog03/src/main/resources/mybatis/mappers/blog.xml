@@ -3,7 +3,7 @@
 
 <mapper namespace="blog">
 	<insert id="insert" parameterType="string">
-		insert into blog values('${userId}님의 블로그', '/assets/images/spring-logo.jpg', #{userId})
+		insert into blog values('${value}님의 블로그', '/assets/images/spring-logo.jpg', #{value})
 	</insert>
 	<update id="update" parameterType="blogvo">
 		<choose>
@@ -16,6 +16,6 @@
 		</choose>
 	</update>
 	<select id="findByUserId" parameterType="string" resultType="blogvo">
-		select title, logo, user_id from blog where user_id = #{userId}
+		select title, logo, user_id as userId from blog where user_id = #{value}
 	</select>
 </mapper>

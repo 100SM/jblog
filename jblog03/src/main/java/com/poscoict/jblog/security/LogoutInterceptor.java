@@ -1,4 +1,4 @@
-package com.poscoict.jblog.sercurity;
+package com.poscoict.jblog.security;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

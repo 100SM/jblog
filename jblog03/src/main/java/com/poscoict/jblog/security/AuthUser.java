@@ -1,4 +1,4 @@
-package com.poscoict.jblog.sercurity;
+package com.poscoict.jblog.security;
 
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

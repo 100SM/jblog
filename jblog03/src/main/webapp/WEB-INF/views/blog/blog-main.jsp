@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!doctype html>
 <html>
 <head>
@@ -17,12 +16,12 @@
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>${post.title }</h4>
-					<p>${post.contents }
+					<h4>${recentPostVo.title }</h4>
+					<p>${recentPostVo.contents }
 					<p>
 				</div>
 				<ul class="blog-list">
-					<c:forEach items="${map.list }" var="postVo" varStatus="status">
+					<c:forEach items="${postVolist }" var="postVo" varStatus="status">
 						<li><a href="">${postVo.title }</a>
 						<span>${postVo.regDate }</span></li>
 					</c:forEach>

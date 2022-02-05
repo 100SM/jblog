@@ -11,26 +11,29 @@ import com.poscoict.jblog.vo.PostVo;
 @Service
 public class PostService {
 	@Autowired
-	PostRepository PostRepository;
+	PostRepository postRepository;
 
 	public boolean addContents(PostVo PostVo) {
-		return PostRepository.insert(PostVo) == 1;
+		return postRepository.insert(PostVo) == 1;
 	}
 
 	public PostVo getContents(Long no, Long categoryNo) {
-		PostVo PostVo = PostRepository.findByNoAndCategoryNo(no, categoryNo);
-		return PostVo;
+		return postRepository.findByNoAndCategoryNo(no, categoryNo);
 	}
 
 	public boolean updateContents(PostVo PostVo) {
-		return PostRepository.update(PostVo) == 1;
+		return postRepository.update(PostVo) == 1;
 	}
 
 	public boolean deleteContents(Long no, Long categoryNo) {
-		return PostRepository.delete(no, categoryNo) == 1;
+		return postRepository.delete(no, categoryNo) == 1;
 	}
 
-	public List<PostVo> getContentsList(Long categoryNo) {
-		return PostRepository.findByCategoryNo(categoryNo);
+	public List<PostVo> getPostList(Long categoryNo) {
+		return postRepository.findByCategoryNo(categoryNo);
+	}
+
+	public PostVo getRecentPost(Long categoryNo) {
+		return postRepository.findRecentPost(categoryNo);
 	}
 }

@@ -1,5 +1,7 @@
 package com.poscoict.jblog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,12 @@ public class CategoryService {
 		categoryRepository.add(categoryVo);
 	}
 
-	public CategoryVo findByBlogId(String blogId) {
+	public List<CategoryVo> findByBlogId(String blogId) {
 		return categoryRepository.findByBlogId(blogId);
+	}
+
+	public CategoryVo findByNoAndBlogId(Long no, String blogId) {
+		return categoryRepository.findByNoAndBlogId(no, blogId);
 	}
 
 	public boolean deleteCategory(CategoryVo categoryVo) {

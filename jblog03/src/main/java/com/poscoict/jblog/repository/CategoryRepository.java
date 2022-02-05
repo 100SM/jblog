@@ -1,6 +1,7 @@
 package com.poscoict.jblog.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,14 +23,21 @@ public class CategoryRepository {
 		return sqlSession.update("category.update", categoryVo);
 	}
 
-	public CategoryVo findByBlogId(String blogId) {
-		return sqlSession.selectOne("category.findByBlogId", blogId);
+	public List<CategoryVo> findByBlogId(String blogId) {
+		return sqlSession.selectList("category.findByBlogId", blogId);
 	}
-	
+
 	public int delete(Long no, String blogId) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("blogId", blogId);
 		return sqlSession.delete("category.delete", map);
+	}
+
+	public CategoryVo findByNoAndBlogId(Long no, String blogId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("blogId", blogId);
+		return sqlSession.selectOne("category.findByNoAndBlogId", map);
 	}
 }

@@ -16,11 +16,13 @@
 	<update id="update" parameterType="categoryvo">
 		update category set name = #{name}, description = #{description} where no = #{no} and blog_id = #{blogId}
 	</update>
-	<select id="findByBlogId" parameterType="string"
-		resultType="categoryvo">
-		select no, name, description, blog_id as blogId from category where blog_id = #{blogId}
+	<select id="findByBlogId" parameterType="string" resultType="categoryvo">
+		select no, name, description, blog_id as blogId from category where blog_id = #{value}
 	</select>
 	<delete id="delete" parameterType="map">
 		delete from category where no = #{no} and blog_id = #{blogId}
 	</delete>
+	<select id="findByNoAndBlogId" parameterType="map" resultType="categoryvo">
+		select no, name, description, blog_id as blogId from category where no = #{no} and blog_id = #{value}
+	</select>
 </mapper>

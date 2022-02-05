@@ -1,4 +1,4 @@
-package com.poscoict.jblog.sercurity;
+package com.poscoict.jblog.security;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
