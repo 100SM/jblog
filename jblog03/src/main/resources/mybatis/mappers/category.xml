@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	<insert id="insert" parameterType="categoryvo">
+		<choose>
+			<when
+				test="(name == '' or name == null) and (description == '' or description == null)">
+				insert into category values(null, '기본 카테고리', '기본 카테고리', #{blogId})
+			</when>
+			<otherwise>
+				insert into category values(null, #{name}, #{description}, #{blogId})
+			</otherwise>
+		</choose>
+	</insert>
+	<update id="update" parameterType="categoryvo">
+		update category set name = #{name}, description = #{description} where no = #{no} and blog_id = #{blogId}
+	</update>
+	<select id="findByBlogId" parameterType="string"
+		resultType="categoryvo">
+		select no, name, description, blog_id as blogId from category where blog_id = #{blogId}
+	</select>
+	<delete id="delete" parameterType="map">
+		delete from category where no = #{no} and blog_id = #{blogId}
+	</delete>
+</mapper>
