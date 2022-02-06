@@ -25,7 +25,7 @@ public class CategoryService {
 		return categoryRepository.findByNoAndBlogId(no, blogId);
 	}
 
-	public boolean deleteCategory(CategoryVo categoryVo) {
-		return categoryRepository.update(categoryVo) == 1;
+	public boolean deleteCategory(Long no, String blogId) {
+		return categoryRepository.delete(no, blogId) == 1;
 	}
 }

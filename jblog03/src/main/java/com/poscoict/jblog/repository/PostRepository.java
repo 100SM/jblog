@@ -15,33 +15,33 @@ public class PostRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public int insert(PostVo PostVo) {
-		return sqlSession.insert("post.insert", PostVo);
+	public int insert(PostVo postVo) {
+		return sqlSession.insert("post.insert", postVo);
 	}
 
-	public int update(PostVo PostVo) {
-		return sqlSession.update("post.update", PostVo);
+	public int update(PostVo postVo) {
+		return sqlSession.update("post.update", postVo);
 	}
 
-	public int delete(Long no, Long CategoryNo) {
+	public int delete(Long no, Long categoryNo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
-		map.put("CategoryNo", CategoryNo);
+		map.put("CategoryNo", categoryNo);
 		return sqlSession.delete("post.delete", map);
 	}
 
-	public List<PostVo> findByCategoryNo(Long CategoryNo) {
-		return sqlSession.selectList("post.findByCategoryNo");
+	public List<PostVo> findByCategoryNo(Long categoryNo) {
+		return sqlSession.selectList("post.findByCategoryNo", categoryNo);
 	}
 
-	public PostVo findByNoAndCategoryNo(Long no, Long CategoryNo) {
+	public PostVo findByNoAndCategoryNo(Long no, Long categoryNo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
-		map.put("CategoryNo", CategoryNo);
+		map.put("categoryNo", categoryNo);
 		return sqlSession.selectOne("post.findByNoAndCategoryNo", map);
 	}
 
-	public PostVo findRecentPost(Long CategoryNo) {
-		return sqlSession.selectOne("post.findRecentPost");
+	public PostVo findRecentPost(Long categoryNo) {
+		return sqlSession.selectOne("post.findRecentPost", categoryNo);
 	}
 }

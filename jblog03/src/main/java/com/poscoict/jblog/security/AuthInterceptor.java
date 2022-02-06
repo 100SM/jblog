@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.poscoict.jblog.vo.BlogVo;
 import com.poscoict.jblog.vo.UserVo;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
@@ -48,10 +49,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		// 6. 인증 확인!!! -> controller의 hanlder(method) 실행
-		if (authUser.getId().equals("ADMIN")) {
+		if (authUser.getId().equals(((BlogVo) request.getAttribute("blogVo")).getUserId())) {
 			return true;
 		}
-		if (!auth.role().equals(authUser.getId())) {
+		if (!((BlogVo) request.getAttribute("blogVo")).getUserId().equals(authUser.getId())) {
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}

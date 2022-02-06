@@ -17,9 +17,9 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.request.contextPath}/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/admin/basic">기본설정</a></li>
 					<li class="selected">카테고리</li>
-					<li><a href="${pageContext.request.contextPath}/admin/write">글작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/admin/write">글작성</a></li>
 				</ul>
 				<table class="admin-cat">
 					<tr>
@@ -29,14 +29,14 @@
 						<th>설명</th>
 						<th>삭제</th>
 					</tr>
-					<c:set var="count" value="${fn:length(list) }" />
-					<c:forEach items="${list}" var="categoryVo" varStatus="status">
+					<c:set var="count" value="${fn:length(categoryVoList) }" />
+					<c:forEach items="${categoryVoList}" var="categoryVo" varStatus="status">
 						<tr>
-							<td>[${count-status.index}]</td>
+							<td>[${status.index + 1}]</td>
 							<td>${categoryVo.name}</td>
 							<td>${param.count }</td>
-							<td>카테고리를 지정하지 않은 경우</td>
-							<td><a href="${pageContext.request.contextPath}/admin/basic/category/delete">
+							<td>${categoryVo.description}</td>
+							<td><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId }/admin/category/delete/${categoryVo.no}">
 									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
 							</a></td>
 						</tr>
@@ -44,20 +44,22 @@
 				</table>
 
 				<h4 class="n-c">새로운 카테고리 추가</h4>
-				<table id="admin-cat-add">
-					<tr>
-						<td class="t">카테고리명</td>
-						<td><input type="text" name="name"></td>
-					</tr>
-					<tr>
-						<td class="t">설명</td>
-						<td><input type="text" name="desc"></td>
-					</tr>
-					<tr>
-						<td class="s">&nbsp;</td>
-						<td><input type="submit" value="카테고리 추가"></td>
-					</tr>
-				</table>
+				<form action="${pageContext.request.contextPath }/jblog/${blogVo.userId}/admin/category/add" method="post">
+					<table id="admin-cat-add">
+						<tr>
+							<td class="t">카테고리명</td>
+							<td><input type="text" name="name"></td>
+						</tr>
+						<tr>
+							<td class="t">설명</td>
+							<td><input type="text" name="description"></td>
+						</tr>
+						<tr>
+							<td class="s">&nbsp;</td>
+							<td><input type="submit" value="카테고리 추가"></td>
+						</tr>
+					</table>
+				</form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/blog/includes/footer.jsp" />

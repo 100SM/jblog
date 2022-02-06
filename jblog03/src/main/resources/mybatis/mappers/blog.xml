@@ -11,7 +11,7 @@
 				update blog set title = #{title} where user_id = #{userId}
 			</when>
 			<otherwise>
-				update blog set title = #{title}, logo = '/assets/images/spring-logo.jpg' where user_id = #{userId}
+				update blog set title = #{title}, logo = #{logo} where user_id = #{userId}
 			</otherwise>
 		</choose>
 	</update>

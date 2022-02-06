@@ -16,13 +16,13 @@
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>${recentPostVo.title }</h4>
-					<p>${recentPostVo.contents }
+					<h4>${PostVo.title }</h4>
+					<p>${PostVo.contents }
 					<p>
 				</div>
 				<ul class="blog-list">
-					<c:forEach items="${postVolist }" var="postVo" varStatus="status">
-						<li><a href="">${postVo.title }</a>
+					<c:forEach items="${postVoList }" var="postVo" varStatus="status">
+						<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/${categoryNo }/${postVo.no}">${postVo.title }</a>
 						<span>${postVo.regDate }</span></li>
 					</c:forEach>
 				</ul>
