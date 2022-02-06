@@ -48,6 +48,20 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 
+	@RequestMapping("/{userId}/{categoryNo}")
+	public String main(@PathVariable("userId") String userId, @PathVariable("categoryNo") Long categoryNo,
+			Model model) {
+		BlogVo blogVo = blogService.getBlog(userId);
+		model.addAttribute("blogVo", blogVo);
+		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
+		model.addAttribute("categoryVoList", categoryVoList);
+		List<PostVo> postVoList = postService.getPostList(categoryNo);
+		model.addAttribute("postVoList", postVoList);
+		PostVo recentPostVo = postService.getRecentPost(categoryNo);
+		model.addAttribute("PostVo", recentPostVo);
+		return "blog/blog-main";
+	}
+
 	@RequestMapping("/{userId}/{categoryNo}/{postNo}")
 	public String main(@PathVariable("userId") String userId, @PathVariable("categoryNo") Long categoryNo,
 			@PathVariable("postNo") Long postNo, Model model) {

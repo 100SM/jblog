@@ -8,7 +8,7 @@
 	<h2>카테고리</h2>
 	<ul>
 		<c:forEach items="${categoryVoList }" var="categoryVo" varStatus="status">
-			<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/${categoryVo.no }/1">${categoryVo.name }</a></li>
+			<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/${categoryVo.no }">${categoryVo.name }</a></li>
 		</c:forEach>
 	</ul>
 </div>
