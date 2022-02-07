@@ -17,12 +17,12 @@
 		update category set name = #{name}, description = #{description} where no = #{no} and blog_id = #{blogId}
 	</update>
 	<select id="findByBlogId" parameterType="string" resultType="categoryvo">
-		select no, name, description, blog_id as blogId from category where blog_id = #{blogId} order by no asc
+		select c.no, c.name, c.description, count(p.no) as postCount from category as c left join post as p on c.no = p.category_no where c.blog_id = #{blogId} group by c.no order by c.no asc
 	</select>
 	<delete id="delete" parameterType="map">
 		delete from category where no = #{no} and blog_id = #{blogId}
 	</delete>
 	<select id="findByNoAndBlogId" parameterType="map" resultType="categoryvo">
-		select no, name, description, blog_id as blogId from category where no = #{no} and blog_id = #{value}
+		select c.no, c.name, c.description, count(p.no) as postCount from category as c left join post as p on c.no = p.category_no where c.no = ${no} and c.blog_id = #{blogId} group by c.no
 	</select>
 </mapper>

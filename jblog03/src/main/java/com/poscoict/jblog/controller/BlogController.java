@@ -166,6 +166,9 @@ public class BlogController {
 		}
 		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
+		if (categoryService.findByNoAndBlogId(categoryNo, userId).getPostCount() > 0) {
+			return "redirect:/jblog/{userId}/admin/category";
+		}
 		categoryService.deleteCategory(categoryNo, userId);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
 		model.addAttribute("categoryVoList", categoryVoList);

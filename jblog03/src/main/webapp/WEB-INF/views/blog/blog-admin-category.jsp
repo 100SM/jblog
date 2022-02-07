@@ -34,11 +34,14 @@
 						<tr>
 							<td>[${status.index + 1}]</td>
 							<td>${categoryVo.name}</td>
-							<td>${param.count }</td>
+							<td>${categoryVo.postCount }</td>
 							<td>${categoryVo.description}</td>
-							<td><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId }/admin/category/delete/${categoryVo.no}">
+							<td>
+							<c:if test="${categoryVo.postCount eq 0 }">
+							<a href="${pageContext.request.contextPath}/jblog/${blogVo.userId }/admin/category/delete/${categoryVo.no}">
 									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-							</a></td>
+							</a></c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
