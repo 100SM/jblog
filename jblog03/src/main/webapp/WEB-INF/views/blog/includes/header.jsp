@@ -12,9 +12,14 @@
 			</c:when>
 			<c:otherwise>
 				<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
-				<c:if test="${authUser.id eq blogVo.userId }">
-					<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/admin/basic">블로그 관리</a></li>
-				</c:if>
+				<c:choose>
+					<c:when test="${authUser.id eq blogVo.userId }">
+						<li><a href="${pageContext.request.contextPath}/jblog/${blogVo.userId}/admin/basic">블로그 관리</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="${pageContext.request.contextPath}/jblog/${authUser.id}">내블로그</a></li>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 	</ul>

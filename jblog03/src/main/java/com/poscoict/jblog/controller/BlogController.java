@@ -2,6 +2,9 @@ package com.poscoict.jblog.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.poscoict.jblog.security.Auth;
-import com.poscoict.jblog.security.AuthUser;
 import com.poscoict.jblog.service.BlogService;
 import com.poscoict.jblog.service.CategoryService;
 import com.poscoict.jblog.service.FileUploadService;
@@ -81,10 +82,22 @@ public class BlogController {
 		return "blog/blog-main";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/basic")
-	public String adminBasic(@PathVariable("userId") String userId, Model model) {
-		BlogVo blogVo = blogService.getBlog(userId);
+	public String adminBasic(@PathVariable("userId") String userId, BlogVo blogVo, HttpServletRequest request,
+			Model model) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
+
+		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
 		model.addAttribute("categoryVoList", categoryVoList);
@@ -93,10 +106,20 @@ public class BlogController {
 		return "blog/blog-admin-basic";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/basic", method = RequestMethod.POST)
-	public String adminBasic(@AuthUser UserVo authUser, BlogVo blogVo,
-			@RequestParam(value = "logo-file") MultipartFile multipartFile) {
+	public String adminBasic(@PathVariable("userId") String userId, BlogVo blogVo,
+			@RequestParam(value = "logo-file") MultipartFile multipartFile, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
 		String url = fileUploadService.restore(multipartFile);
 		blogVo.setLogo(url);
 		blogService.updateBlog(blogVo);
@@ -104,10 +127,21 @@ public class BlogController {
 		return "redirect:/jblog/{userId}/1/1";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/category")
-	public String adminCategory(@PathVariable("userId") String userId, Model model) {
-		BlogVo blogVo = blogService.getBlog(userId);
+	public String adminCategory(@PathVariable("userId") String userId, BlogVo blogVo, HttpServletRequest request,
+			Model model) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
+		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
 		model.addAttribute("categoryVoList", categoryVoList);
@@ -116,11 +150,21 @@ public class BlogController {
 		return "blog/blog-admin-category";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/category/delete/{categoryNo}")
-	public String adminCategoryDelete(@PathVariable("userId") String userId,
-			@PathVariable("categoryNo") Long categoryNo, Model model) {
-		BlogVo blogVo = blogService.getBlog(userId);
+	public String adminCategoryDelete(@PathVariable("userId") String userId, BlogVo blogVo,
+			@PathVariable("categoryNo") Long categoryNo, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
+		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
 		categoryService.deleteCategory(categoryNo, userId);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
@@ -130,10 +174,20 @@ public class BlogController {
 		return "redirect:/jblog/{userId}/admin/category";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/category/add", method = RequestMethod.POST)
 	public String adminCategory(@PathVariable("userId") String userId, BlogVo blogVo, CategoryVo categoryVo,
-			Model model) {
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
 		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
 		categoryVo.setBlogId(userId);
@@ -145,9 +199,20 @@ public class BlogController {
 		return "redirect:/jblog/{userId}/admin/category";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/write")
-	public String adminWrite(@PathVariable("userId") String userId, BlogVo blogVo, CategoryVo categoryVo, Model model) {
+	public String adminWrite(@PathVariable("userId") String userId, BlogVo blogVo, CategoryVo categoryVo,
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
 		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
@@ -155,10 +220,20 @@ public class BlogController {
 		return "blog/blog-admin-write";
 	}
 
-	@Auth
 	@RequestMapping(value = "/{userId}/admin/write", method = RequestMethod.POST)
 	public String adminWrite(@PathVariable("userId") String userId, BlogVo blogVo, Long categoryNo, PostVo postVo,
-			Model model) {
+			HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		if (session == null) {
+			return "redirect:/user/login";
+		}
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if (authUser == null) {
+			return "redirect:/user/login";
+		}
+		if (!authUser.getId().equals(blogVo.getUserId())) {
+			return "redirect:/jblog/{userId}";
+		}
 		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
@@ -170,6 +245,6 @@ public class BlogController {
 		PostVo recentPostVo = postService.getRecentPost(categoryVoList.get(0).getNo());
 		model.addAttribute("PostVo", recentPostVo);
 		model.addAttribute("categoryNo", 1);
-		return "redirect:/jblog/{userId}";
+		return "redirect:/jblog/{userId}/{categoryNo}";
 	}
 }

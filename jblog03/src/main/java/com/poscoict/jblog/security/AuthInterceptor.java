@@ -49,10 +49,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		// 6. 인증 확인!!! -> controller의 hanlder(method) 실행
-		if (authUser.getId().equals(((BlogVo) request.getAttribute("blogVo")).getUserId())) {
+		if (authUser.getId().equals(((BlogVo) (request.getAttribute("blogVo"))).getUserId())) {
 			return true;
 		}
-		if (!((BlogVo) request.getAttribute("blogVo")).getUserId().equals(authUser.getId())) {
+		if (!authUser.getId().equals(((BlogVo) (request.getAttribute("blogVo"))).getUserId())) {
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}
