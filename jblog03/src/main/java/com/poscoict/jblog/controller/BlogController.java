@@ -70,11 +70,11 @@ public class BlogController {
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
 		model.addAttribute("categoryVoList", categoryVoList);
 		if (categoryNo == null)
-			categoryNo = 1L;
+			categoryNo = categoryService.getRecentCategoryNo(userId);
 		List<PostVo> postVoList = postService.getPostList(categoryNo);
 		model.addAttribute("postVoList", postVoList);
 		if (postNo == null)
-			postNo = 1L;
+			postNo = postService.getRecentPost(categoryNo).getNo();
 		PostVo PostVo = postService.getContents(postNo, categoryNo);
 		model.addAttribute("PostVo", PostVo);
 

@@ -28,4 +28,8 @@ public class CategoryService {
 	public boolean deleteCategory(Long no, String blogId) {
 		return categoryRepository.delete(no, blogId) == 1;
 	}
+	
+	public Long getRecentCategoryNo(String blogId) {
+		return categoryRepository.getRecentCategoryNo(blogId);
+	}
 }

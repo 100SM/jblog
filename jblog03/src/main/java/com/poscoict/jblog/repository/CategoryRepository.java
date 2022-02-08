@@ -40,4 +40,8 @@ public class CategoryRepository {
 		map.put("blogId", blogId);
 		return sqlSession.selectOne("category.findByNoAndBlogId", map);
 	}
+
+	public Long getRecentCategoryNo(String blogId) {
+		return sqlSession.selectOne("category.getRecentCategoryNo", blogId);
+	}
 }

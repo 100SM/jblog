@@ -25,4 +25,7 @@
 	<select id="findByNoAndBlogId" parameterType="map" resultType="categoryvo">
 		select c.no, c.name, c.description, count(p.no) as postCount from category as c left join post as p on c.no = p.category_no where c.no = ${no} and c.blog_id = #{blogId} group by c.no
 	</select>
+	<select id="getRecentCategoryNo" parameterType="string" resultType="long">
+		select no, name, description, blog_id as blogId from category where blog_id = #{blog_id} order by no asc limit 1
+	</select>
 </mapper>
