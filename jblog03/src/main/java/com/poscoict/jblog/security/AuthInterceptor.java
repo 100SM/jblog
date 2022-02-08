@@ -28,7 +28,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// 3. Handler Method의 @Auth 받아오기
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 		@SuppressWarnings("unchecked")
-		Map<String, Object> userId = (Map<String, Object>) request
+		Map<String, Object> uriVariables = (Map<String, Object>) request
 				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
 		// 4. Handler Method @Auth 가 없다면 Type에 있는지 확인(과제)
@@ -54,11 +54,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		// 6. 인증 확인!!! -> controller의 hanlder(method) 실행
-		if (authUser.getId().equals(userId.get("userId"))) {
+		if (authUser.getId().equals(uriVariables.get("userId"))) {
 			return true;
 		}
-		if (!authUser.getId().equals(userId.get("userId"))) {
-			response.sendRedirect(request.getContextPath() + "/jblog/" + userId.get("userId"));
+		if (!authUser.getId().equals(uriVariables.get("userId"))) {
+			response.sendRedirect(request.getContextPath() + "/jblog/" + uriVariables.get("userId"));
 			return false;
 		}
 
