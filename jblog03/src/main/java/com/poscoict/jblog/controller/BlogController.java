@@ -42,7 +42,8 @@ public class BlogController {
 		model.addAttribute("postVoList", postVoList);
 		PostVo recentPostVo = postService.getRecentPost(categoryVoList.get(0).getNo());
 		model.addAttribute("PostVo", recentPostVo);
-		model.addAttribute("categoryNo", 1);
+		Long categoryNo = categoryService.getRecentCategoryNo(userId);
+		model.addAttribute("categoryNo", categoryNo);
 
 		return "blog/blog-main";
 	}
@@ -58,7 +59,6 @@ public class BlogController {
 		model.addAttribute("postVoList", postVoList);
 		PostVo recentPostVo = postService.getRecentPost(categoryNo);
 		model.addAttribute("PostVo", recentPostVo);
-
 		return "blog/blog-main";
 	}
 
@@ -90,7 +90,6 @@ public class BlogController {
 		model.addAttribute("categoryVoList", categoryVoList);
 		List<PostVo> postVoList = postService.getPostList(categoryVoList.get(0).getNo());
 		model.addAttribute("postVoList", postVoList);
-
 		return "blog/blog-admin-basic";
 	}
 
@@ -124,7 +123,8 @@ public class BlogController {
 			@PathVariable("categoryNo") Long categoryNo, Model model) {
 		blogVo = blogService.getBlog(userId);
 		model.addAttribute("blogVo", blogVo);
-		if (categoryService.findByNoAndBlogId(categoryNo, userId).getPostCount() > 0) {
+		if (categoryService.findByNoAndBlogId(categoryNo, userId).getPostCount() > 0
+				|| categoryService.findByBlogId(userId).size() == 1) {
 			return "redirect:/jblog/{userId}/admin/category";
 		}
 		categoryService.deleteCategory(categoryNo, userId);
@@ -132,7 +132,6 @@ public class BlogController {
 		model.addAttribute("categoryVoList", categoryVoList);
 		List<PostVo> postVoList = postService.getPostList(categoryVoList.get(0).getNo());
 		model.addAttribute("postVoList", postVoList);
-
 		return "redirect:/jblog/{userId}/admin/category";
 	}
 
@@ -148,7 +147,6 @@ public class BlogController {
 		model.addAttribute("categoryVoList", categoryVoList);
 		List<PostVo> postVoList = postService.getPostList(categoryVoList.get(0).getNo());
 		model.addAttribute("postVoList", postVoList);
-
 		return "redirect:/jblog/{userId}/admin/category";
 	}
 
@@ -159,7 +157,6 @@ public class BlogController {
 		model.addAttribute("blogVo", blogVo);
 		List<CategoryVo> categoryVoList = categoryService.findByBlogId(blogVo.getUserId());
 		model.addAttribute("categoryVoList", categoryVoList);
-
 		return "blog/blog-admin-write";
 	}
 
@@ -177,8 +174,8 @@ public class BlogController {
 		model.addAttribute("postVoList", postVoList);
 		PostVo recentPostVo = postService.getRecentPost(categoryVoList.get(0).getNo());
 		model.addAttribute("PostVo", recentPostVo);
-		model.addAttribute("categoryNo", 1);
-
-		return "redirect:/jblog/{userId}/{categoryNo}";
+		categoryNo = categoryService.getRecentCategoryNo(userId);
+		model.addAttribute("categoryNo", categoryNo);
+		return "redirect:/jblog/{userId}";
 	}
 }

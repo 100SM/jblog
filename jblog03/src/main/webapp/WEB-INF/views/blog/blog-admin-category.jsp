@@ -38,9 +38,12 @@
 							<td>${categoryVo.description}</td>
 							<td>
 							<c:if test="${categoryVo.postCount eq 0 }">
-							<a href="${pageContext.request.contextPath}/jblog/${blogVo.userId }/admin/category/delete/${categoryVo.no}">
-									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-							</a></c:if>
+								<c:if test="${fn:length(categoryVoList) ne 1 }">
+									<a href="${pageContext.request.contextPath}/jblog/${blogVo.userId }/admin/category/delete/${categoryVo.no}">
+										<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+									</a>
+								</c:if>
+							</c:if>
 							</td>
 						</tr>
 					</c:forEach>
