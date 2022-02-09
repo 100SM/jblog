@@ -17,18 +17,18 @@ import com.poscoict.jblog.interceptor.BlogInterceptor;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({ "com.poscoict.jblog.controller", "com.poscoict.jblog.exception" })
+@ComponentScan({ "com.poscoict.jblog.controller", "com.poscoict.jblog.exception", "com.poscoict.jblog.interceptor" })
 @Import({ MvcConfig.class, SecurityConfig.class, MessageConfig.class, FileuploadConfig.class })
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
-	public HandlerInterceptor siteInterceptor() {
+	public HandlerInterceptor blogInterceptor() {
 		return new BlogInterceptor();
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(siteInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(blogInterceptor()).addPathPatterns("/**");
 	}
 
 }

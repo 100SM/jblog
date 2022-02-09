@@ -10,7 +10,7 @@ import com.poscoict.config.app.MyBatisConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({ "com.poscoict.jblog.service", "com.poscoict.jblog.repository", "com.poscoict.jblog.aspect" })
+@ComponentScan({ "com.poscoict.jblog.service", "com.poscoict.jblog.repository" })
 @Import({ DBConfig.class, MyBatisConfig.class })
 public class AppConfig {
 
